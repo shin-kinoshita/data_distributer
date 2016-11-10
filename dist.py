@@ -1,0 +1,86 @@
+import sys
+import os
+import random
+import shutil
+from docopt import docopt
+
+__doc__ = """{f}
+Usage: 
+    {f} <base_dir> [-f | --force] [-r | --ratio <train_ratio>] [--train <train_dir_path>] [--test <test_dir_path>]
+    {f} -h | --help
+Options:
+    -f --force          if train_dir_path or test_dir_path exist already, it will be relopaced
+    -h --help           show help of this command
+""".format(f=__file__)
+
+def dist(base_dir_path, train_dir_path, test_dir_path, train_ratio):
+    class_list = [ class_name for class_name in os.listdir(base_dir_path)
+                    if os.path.isdir(base_dir_path + '/' + class_name)]
+
+    if not os.path.isdir(train_dir_path):
+        os.mkdir(train_dir_path)
+
+    if not os.path.isdir(test_dir_path):
+        os.mkdir(test_dir_path)
+
+    for class_name in class_list:
+        class_dir_path = base_dir_path+ '/' + class_name
+        train_class_dir_path = train_dir_path + '/' + class_name
+        test_class_dir_path  = test_dir_path + '/' + class_name
+        if not os.path.exists(train_class_dir_path):
+            os.mkdir(train_class_dir_path)
+
+        if not os.path.exists(test_class_dir_path):
+            os.mkdir(test_class_dir_path)
+
+        _distribute_file(class_dir_path, train_class_dir_path, test_class_dir_path, train_ratio)
+
+def _distribute_file(class_dir_path, train_class_dir_path, test_class_dir_path, train_ratio):
+    file_list = os.listdir(class_dir_path)
+    file_num  = len(file_list)
+    divider   = int(file_num * train_ratio)
+
+    random.shuffle(file_list)
+    
+    train_file_list = file_list[:divider]
+    test_file_list  = file_list[divider:]
+
+    for train_file in train_file_list:
+        shutil.copyfile(class_dir_path + '/' + train_file, 
+                        train_class_dir_path + '/' + train_file)
+
+    for test_file in test_file_list:
+        shutil.copyfile(class_dir_path + '/' + test_file, 
+                        test_class_dir_path + '/' + test_file)
+
+def is_overlap_dir(train_dir_path, test_dir_path):
+
+    if os.path.isdir(train_dir_path):
+        print('train dir is already exit. please change location')
+        return True
+
+    if os.path.isdir(test_dir_path):
+        print('test dir is already exit. please change location')
+        return True
+
+    return False
+
+if __name__ == '__main__':
+    args = docopt(__doc__)
+
+    train_ratio = 0.6
+    base_dir_path = args['<base_dir>']
+    train_dir_path = './train'
+    test_dir_path = './test'
+
+    if args['--ratio']:
+        train_dir_path = float(args['<train_ratio'])
+    if args['--train']:
+        train_dir_path = args['<train_dir_path>']
+    if args['--test']:
+        test_dir_path = args['<test_dir_path>']
+
+    if (not os.path.exists(train_dir_path) and not os.path.exists(test_dir_path)) or args['--force']:
+        dist(base_dir_path, train_dir_path, test_dir_path, train_ratio)
+    else :
+        print('some dirs are already exist. please change location')

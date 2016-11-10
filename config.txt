@@ -1,0 +1,14 @@
+[directory]
+train_dir = train
+test_dir = test
+
+[class_pair]
+millind: millind
+shanky: shanky
+snehal: snehal
+snehal2: snehal2
+prajakta: prajakta
+shin_kinoshita: shin_kinoshita
+yogesh_aware: yogesh_aware
+yogesh_nikam: yogesh_nikam
+yusuke_kuwa: yusuke_kuwa
