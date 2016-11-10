@@ -13,7 +13,9 @@ setup(
     license="MIT",
     author="shin-kinoshita",
     packages=find_packages(),
-    install_requires=["ConfigParser"],
+    install_requires=["ConfigParser",
+                      "docopt",
+    ],
     long_description=long_description,
     classifiers=[
         "Programming Language :: Python",
