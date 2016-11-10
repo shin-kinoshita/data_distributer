@@ -14,12 +14,11 @@ setup(
     author="shin-kinoshita",
     packages=find_packages(),
     install_requires=["ConfigParser"],
-    scripts=['scripts/dist', 
-             'scripts/lncopy'
-    ],
     long_description=long_description,
     classifiers=[
         "Programming Language :: Python",
         "Programming Language :: Python :: 2.7",
-    ]
+    ],
+    scripts=['scripts/dist',
+             'scripts/lncopy']
 )
