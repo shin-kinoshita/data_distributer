@@ -13,10 +13,12 @@ setup(
     license="MIT",
     author="shin-kinoshita",
     packages=find_packages(),
-    install_requires=[],
+    install_requires=["ConfigParser"],
     long_description=long_description,
     classifiers=[
         "Programming Language :: Python",
         "Programming Language :: Python :: 2.7",
     ]
+    scripts=['scripts/dist',
+             'scripts/lncopy']
 )
