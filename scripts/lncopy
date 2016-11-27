@@ -4,10 +4,10 @@ import shutil
 import configparser
 from docopt import docopt
 
-__doc__ = """{f}
+__doc__ = """lncopy
 Usage:
-    {f} <config_file>
-    {f} -h | --help
+    lncopy <config_file>
+    lncopy -h | --help
 Parameters:
     <config_file>       specify config file path
 Options:

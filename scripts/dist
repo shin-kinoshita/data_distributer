@@ -5,10 +5,10 @@ import random
 import shutil
 from docopt import docopt
 
-__doc__ = """{f}
+__doc__ = """dist
 Usage: 
-    {f} <base_dir> [-f | --force] [-r | --ratio <train_ratio>] [--train <train_dir_path>] [--test <test_dir_path>]
-    {f} -h | --help
+    dist <base_dir> [-f | --force] [-r | --ratio <train_ratio>] [--train <train_dir_path>] [--test <test_dir_path>]
+    dist -h | --help
 Parameters:
     <train_ration>      default value is 0.6
     <train_dir_path>    default value is './train'
