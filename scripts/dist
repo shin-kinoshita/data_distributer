@@ -9,6 +9,10 @@ __doc__ = """{f}
 Usage: 
     {f} <base_dir> [-f | --force] [-r | --ratio <train_ratio>] [--train <train_dir_path>] [--test <test_dir_path>]
     {f} -h | --help
+Parameters:
+    <train_ration>      default value is 0.6
+    <train_dir_path>    default value is './train'
+    <test_dir_path>     default value is './test'
 Options:
     -f --force          if train_dir_path or test_dir_path exist already, it will be relopaced
     -h --help           show help of this command

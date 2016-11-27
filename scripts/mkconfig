@@ -1,0 +1,79 @@
+#!/usr/bin/env python
+import os
+import configparser
+from docopt import docopt
+
+__doc__ = """mkconfig
+Usage:
+    mkconfig <config_file> [--train <train_dir>] [--test <test_dir>]
+    mkconfig -f | --format
+    mkconfig -h | --help
+Parameters:
+    <config_file>                       specify config file path
+Options:
+    -d --dir <train_dir> <test_dir>     specify train and test directory path
+    -f --format                         show config file format
+    -h --help                           show help of this command
+""".format(f=__file__)
+
+def mkconfig(config_file_path, train_dir, test_dir, class_dic):
+
+    f = open(config_file_path, 'w')
+    config_str  = "[directory]\n"
+    config_str += "\ttrain_dir = {}\n".format(train_dir)
+    config_str += "\ttest_dir  = {}\n".format(test_dir)
+    config_str += "[class_pair]\n"
+
+    for key in class_dic:
+        config_str += '\t{}: {}\n'.format(key, class_dic[key])
+
+    f.write(config_str)
+    f.close()
+
+def generate_class_dic(train_list, test_list):
+    class_dic = {}
+    num_class = min(len(train_list), len(test_list))
+    for i in range(num_class):
+        train_class = train_list[i]
+        test_class  = test_list[i]
+        class_dic[train_class] = test_class
+    return class_dic
+
+def show_config_file_format():
+    file_format = """
+    file format 
+    ------------------------------
+    [directory]
+    train_dir = train
+    test_dir  = test
+
+    [class_pair]
+    train_class1: test_class1
+    train_class2: test_class2
+    train_class3: test_class3
+    train_class4: test_class4
+    ------------------------------
+    """
+    print(file_format)
+
+if __name__ == '__main__':
+    args = docopt(__doc__)
+
+    if args['--format']:
+        show_config_file_format()
+    else:
+        config_file_path = args['<config_file>']
+
+        train_dir = ''
+        test_dir  = ''
+
+        class_dic = {}
+
+        if args['--train'] and args['--test']:
+            train_dir = args['<train_dir>']
+            test_dir  = args['<test_dir>']
+            train_class_list = os.listdir(train_dir)
+            test_class_list = os.listdir(test_dir)
+            class_dic = generate_class_dic(train_class_list, test_class_list)
+
+        mkconfig(config_file_path, train_dir, test_dir, class_dic)

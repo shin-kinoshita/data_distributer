@@ -21,6 +21,9 @@ setup(
         "Programming Language :: Python",
         "Programming Language :: Python :: 3.5",
     ],
-    scripts=['scripts/dist',
-             'scripts/lncopy']
+    scripts=[
+        'scripts/dist',
+        'scripts/lncopy',
+        'scripts/mkconfig',
+    ]
 )
